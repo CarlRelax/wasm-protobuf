@@ -7,13 +7,16 @@
 
 class Decoder{
     public:
-        Decoder::Decoder(){};
-        Decoder::~Decoder(){};
-        std::string decode(){
-            return "Hello World";
+        Decoder(){}
+        ~Decoder(){}
+        std::string decode(const std::string& data){
+            Person person;
+            person.ParseFromString(data);
+            std::cout << "Name: " << person.name() << std::endl;
+            return person.DebugString();
         }
 };
-EMSCRIPTEN_BINDINGS(Decoder) {
+EMSCRIPTEN_BINDINGS(decoder) {
     emscripten::class_<Decoder>("Decoder")
         .constructor<>()
         .function("decode", &Decoder::decode);
